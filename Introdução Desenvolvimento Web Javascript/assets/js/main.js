@@ -7,6 +7,13 @@ const createElement = (elementName, attributes) => {
     return element;
 }
 
+const pokemonContainer = document.getElementById('pokemonList')
+const loadMoreButton = document.getElementById('loadMoreButton');
+
+const maxRecords = 151;
+const limit = 5;
+let offset = 0;
+
 function convertPokemonToLi(pokemon) {
     const pokemonLi = createElement('li', {
         class: `pokemon ${pokemon.type}`
@@ -34,7 +41,7 @@ function convertPokemonToLi(pokemon) {
 
     pokemon.types.map((type) => {
         const pokemonType = createElement('li', {
-            class: 'type'
+            class: `type ${type}`
         });
         pokemonType.textContent = type;
         pokemonTypes.appendChild(pokemonType);
@@ -44,7 +51,7 @@ function convertPokemonToLi(pokemon) {
         src: pokemon.photo,
         alt: pokemon.name
     });
-    
+
     pokemonDetails.appendChild(pokemonTypes);
     pokemonDetails.appendChild(pokemonImage);
     pokemonLi.appendChild(pokemonDetails);
@@ -52,12 +59,28 @@ function convertPokemonToLi(pokemon) {
     return pokemonLi;
 }
 
-const pokemonContainer = document.getElementById('pokemonList')
+function loadPokemons(offset, limit) {
+    pokeApi.getPokemons(offset, limit).then((pokemonList = []) => {
+        pokemonList.map((pokemon) => {
+            const newPokemon = convertPokemonToLi(pokemon);
+            pokemonContainer.appendChild(newPokemon);
+        });
 
-pokeApi.getPokemons().then((pokemonList = []) => {
-    pokemonList.map((pokemon) => {
-        const newPokemon = convertPokemonToLi(pokemon);
-        pokemonContainer.appendChild(newPokemon);
     });
+}
 
+loadPokemons(offset, limit);
+
+loadMoreButton.addEventListener('click', () => {
+    offset += limit;
+    const qtdRecordsWithNexPage = offset + limit;
+
+    if (qtdRecordsWithNexPage >= maxRecords) {
+        const newLimit = maxRecords - offset;
+        loadPokemons(offset, newLimit);
+
+        loadMoreButton.parentElement.removeChild(loadMoreButton);
+    } else {
+        loadPokemons(offset, limit);
+    }
 });
