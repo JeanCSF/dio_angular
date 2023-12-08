@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias</title>
+    <link rel="stylesheet" href="./styles/card.css">
+    <script src="./src/Components/CardNews.js" defer></script>
+    <script src="./src/Components/TituloDinamico.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card__left">
+                <span>By Jean Carlos</span>
+                <a href="#">Darth Vader contrata Devs</a>
+                <p>Darth Vader procura desenvolvedores que sabem trabalhar com Web Components</p>
+            </div>
+            <div class="card__right">
+                <img src="./assets/asset-vader.png" alt="Darth Vader">
+            </div>
+        </div>
+    </div>
+    <card-news 
+        author="Jean" 
+        title="Darth Vader contrata Devs" 
+        description="Darth Vader procura desenvolvedores que sabem trabalhar com Web Components" 
+        image="./assets/asset-vader.png"
+        link="#"
+        ></card-news>
+    <card-news author="" title="Darth Vader contrata Devs" description="Darth Vader procura desenvolvedores que sabem trabalhar com Web Components" image=""></card-news>
+    <titulo-dinamico titulo="Jean"></titulo-dinamico>
+</body>
+</html>
